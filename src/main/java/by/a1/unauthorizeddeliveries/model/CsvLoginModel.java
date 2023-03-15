@@ -1,4 +1,4 @@
-package by.a1.unauthorizeddeliveries.util.model;
+package by.a1.unauthorizeddeliveries.model;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
