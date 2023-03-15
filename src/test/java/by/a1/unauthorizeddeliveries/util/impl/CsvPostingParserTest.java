@@ -18,7 +18,7 @@ class CsvPostingParserTest {
 
     @Test
     void parseShouldReturnCorrectModel() throws IOException {
-        List<CsvPostingModel> parse = parser.defaultBuilder(PATH);
+        List<CsvPostingModel> parse = parser.parse(PATH);
         System.out.println(parse);
     }
 }

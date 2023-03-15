@@ -11,8 +11,6 @@ import java.util.List;
 public class CsvLoginParser extends CsvParser<CsvLoginModel> {
     @Override
     public List<CsvLoginModel> parse(String path) throws IOException {
-        return defaultBuilder(path,CsvLoginModel.class)
-                .build()
-                .parse();
+        return defaultBuilder(path,CsvLoginModel.class);
     }
 }

@@ -18,7 +18,7 @@ class CsvLoginParserTest {
 
     @Test
     void parseShouldReturnCorrectModel() throws IOException {
-        List<CsvLoginModel> parsed = parser.defaultBuilder(PATH);
+        List<CsvLoginModel> parsed = parser.parse(PATH);
         parsed.forEach(CsvLoginModel::trim);
         System.out.println(parsed);
     }
