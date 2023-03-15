@@ -4,31 +4,44 @@ import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import org.apache.commons.lang3.StringUtils;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CsvPostingModel implements CsvBeanMarker {
+public class CsvPostingModel implements CsvBean {
     @CsvBindByName(column = "Mat. Doc.")
-    private long id;
+    private String id;
     @CsvBindByName(column = "Item")
-    private long item;
+    private String item;
     @CsvBindByName(column = "Doc. Date")
-    private LocalDate contractDate;
+    private String contractDate;
     @CsvBindByName(column = "Pstng Date")
-    private LocalDate postingDate;
+    private String postingDate;
     @CsvBindByName(column = "Material Description")
     private String materialDescription;
     @CsvBindByName(column = "Quantity")
-    private int quantity;
+    private String quantity;
     @CsvBindByName(column = "BUn")
     private String measurementUnit;
     @CsvBindByName(column = "Amount LC")
-    private long amount;
+    private String amount;
     @CsvBindByName(column = "Crcy")
     private String currency;
     @CsvBindByName(column = "User Name")
     private String username;
+
+    @Override
+    public void trim() {
+        id = StringUtils.trim(id);
+        item = StringUtils.trim(item);
+        contractDate = StringUtils.trim(contractDate);
+        postingDate = StringUtils.trim(postingDate);
+        materialDescription = StringUtils.trim(materialDescription);
+        quantity = StringUtils.trim(quantity);
+        measurementUnit = StringUtils.trim(measurementUnit);
+        amount = StringUtils.trim(amount);
+        currency = StringUtils.trim(currency);
+        username = StringUtils.trim(username);
+    }
 }
