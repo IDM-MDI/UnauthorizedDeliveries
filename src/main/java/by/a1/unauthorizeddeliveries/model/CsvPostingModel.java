@@ -2,6 +2,7 @@ package by.a1.unauthorizeddeliveries.model;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CsvPostingModel implements CsvBean {
     @CsvBindByName(column = "Mat. Doc.")
     private String id;
