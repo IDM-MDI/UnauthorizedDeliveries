@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class CsvLoginParser implements CsvParser<CsvLoginModel> {
+public class CsvLoginParser extends CsvParser<CsvLoginModel> {
     @Override
     public List<CsvLoginModel> parse(String path) throws IOException {
-        return parse(path,CsvLoginModel.class);
+        return defaultBuilder(path,CsvLoginModel.class)
+                .build()
+                .parse();
     }
 }

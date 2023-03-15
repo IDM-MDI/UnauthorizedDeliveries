@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CsvPostingParserTest {
     private static final String PATH = "src/main/resources/csv/postings.csv";
     private CsvParser<CsvPostingModel> parser;
@@ -20,7 +18,7 @@ class CsvPostingParserTest {
 
     @Test
     void parseShouldReturnCorrectModel() throws IOException {
-        List<CsvPostingModel> parse = parser.parse(PATH);
+        List<CsvPostingModel> parse = parser.defaultBuilder(PATH);
         System.out.println(parse);
     }
 }

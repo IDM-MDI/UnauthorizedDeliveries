@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class CsvPostingParser implements CsvParser<CsvPostingModel> {
+public class CsvPostingParser extends CsvParser<CsvPostingModel> {
     @Override
     public List<CsvPostingModel> parse(String path) throws IOException {
-        return parse(path, CsvPostingModel.class);
+        return defaultBuilder(path, CsvPostingModel.class)
+                .withSeparator(';')
+                .build()
+                .parse();
     }
 }
