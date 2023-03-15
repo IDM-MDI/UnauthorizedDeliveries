@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CsvLoginModel {
+public class CsvLoginModel implements CsvBeanMarker {
     @CsvBindByName(column = "Application")
     private String application;
     @CsvBindByName(column = "AppAccountName")

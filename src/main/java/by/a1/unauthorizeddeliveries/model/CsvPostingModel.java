@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CsvPostingModel {
+public class CsvPostingModel implements CsvBeanMarker {
     @CsvBindByName(column = "Mat. Doc.")
     private long id;
     @CsvBindByName(column = "Item")
