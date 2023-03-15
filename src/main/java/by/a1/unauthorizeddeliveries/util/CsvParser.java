@@ -1,5 +1,5 @@
 package by.a1.unauthorizeddeliveries.util;
 
-public interface Parser {
+public interface CsvParser {
 
 }
