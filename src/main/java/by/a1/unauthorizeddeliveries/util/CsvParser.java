@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries.util;
 
+import by.a1.unauthorizeddeliveries.validator.CsvValidator;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.IOException;
@@ -15,8 +16,7 @@ public abstract class CsvParser<T> {
         try (Reader reader = Files.newBufferedReader(Path.of(path))) {
             return new CsvToBeanBuilder<T>(reader)
                     .withType(clazz)
-                    .withFilter(stringValues -> Arrays.stream(stringValues)
-                            .anyMatch(value -> value != null && value.length() > 0))
+                    .withFilter(CsvValidator::isLineEmpty)
                     .build()
                     .parse();
         }

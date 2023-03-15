@@ -2,6 +2,7 @@ package by.a1.unauthorizeddeliveries.util.impl;
 
 import by.a1.unauthorizeddeliveries.model.CsvPostingModel;
 import by.a1.unauthorizeddeliveries.util.CsvParser;
+import by.a1.unauthorizeddeliveries.validator.CsvValidator;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,7 @@ public class CsvPostingParser extends CsvParser<CsvPostingModel> {
         try (Reader reader = Files.newBufferedReader(Path.of(path))) {
             return new CsvToBeanBuilder<CsvPostingModel>(reader)
                     .withType(CsvPostingModel.class)
-                    .withFilter(stringValues -> Arrays.stream(stringValues)
-                            .anyMatch(value -> value != null && value.length() > 0))
+                    .withFilter(CsvValidator::isLineEmpty)
                     .withSeparator(';')
                     .build()
                     .parse();
