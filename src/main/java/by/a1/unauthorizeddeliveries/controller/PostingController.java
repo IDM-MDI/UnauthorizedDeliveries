@@ -71,7 +71,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingResponseDTO posting) throws ServiceException {
+    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingRequestDTO posting) throws ServiceException {
         return service.findPostings(posting);
     }
 
