@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries.controller;
 
+import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -81,21 +82,8 @@ public class PostingController {
             responseCode = "201",
             description = "Posting created"
     )
-    public PostingResponseDTO savePosting(@RequestBody @Valid PostingResponseDTO posting) throws ServiceException {
+    public PostingResponseDTO savePosting(@RequestBody @Valid PostingRequestDTO posting) throws ServiceException {
         return service.savePosting(posting);
-    }
-    @PutMapping("/{id}")
-    @Operation(
-            summary = "Update Posting",
-            description = "API Point made for updating Posting"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Posting updated"
-    )
-    public PostingResponseDTO updatePosting(@PathVariable @Min(1) long id,
-                                            @RequestBody @Valid PostingResponseDTO posting) throws ServiceException {
-        return service.updatePosting(id,posting);
     }
     @DeleteMapping("/{id}")
     @Operation(
