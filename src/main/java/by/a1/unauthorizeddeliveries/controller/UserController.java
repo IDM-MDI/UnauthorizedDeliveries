@@ -42,23 +42,23 @@ public class UserController {
                                  @RequestParam(defaultValue = "0") @Min(0) int page,
                                   @Parameter(description = "Page size(def: 10, min: 1)")
                                  @RequestParam(defaultValue = "10") @Min(1) int size,
-                                  @Parameter(description = "Filter by field(def: id)")
-                                 @RequestParam(defaultValue = "id") @NotBlank String filter,
+                                  @Parameter(description = "Filter by field(def: username)")
+                                 @RequestParam(defaultValue = "username") @NotBlank String filter,
                                   @Parameter(description = "asc or desc(def: asc)")
                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
         return service.findUsers(page,size,filter,direction);
     }
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{username}")
     @Operation(
-            summary = "User by ID",
-            description = "API Point made for return user by ID"
+            summary = "User by username",
+            description = "API Point made for return user by username"
     )
     @ApiResponse(
             responseCode = "200",
             description = "User found"
     )
-    public UserDTO getUser(@Parameter(description = "User ID") @PathVariable @Min(1) long id) throws ServiceException {
-        return service.findUser(id);
+    public UserDTO getUser(@Parameter(description = "User username") @PathVariable @Min(1) String username) throws ServiceException {
+        return service.findUser(username);
     }
 
     @GetMapping("/search")
@@ -86,7 +86,7 @@ public class UserController {
     public UserDTO saveUser(@RequestBody @Valid UserDTO user) throws ServiceException {
         return service.saveUser(user);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/{username}")
     @Operation(
             summary = "Update User",
             description = "API Point made for updating User"
@@ -95,11 +95,11 @@ public class UserController {
             responseCode = "200",
             description = "User updated"
     )
-    public UserDTO updateUser(@PathVariable @Min(1) long id,
+    public UserDTO updateUser(@PathVariable @Min(1) String username,
                               @RequestBody @Valid UserDTO user) throws ServiceException {
-        return service.updateUser(id,user);
+        return service.updateUser(username,user);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     @Operation(
             summary = "Delete User",
             description = "API Point made for deleting user"
@@ -109,8 +109,8 @@ public class UserController {
             description = "User deleted"
     )
     
-    public ResponseEntity<String> deleteUsers(@PathVariable @Min(1) long id) throws ServiceException {
-        service.deleteUser(id);
+    public ResponseEntity<String> deleteUsers(@PathVariable @Min(1) String username) throws ServiceException {
+        service.deleteUser(username);
         return ResponseEntity.ok("The user successfully was deleted");
     }
 }

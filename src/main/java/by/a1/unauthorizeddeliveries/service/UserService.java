@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries.service;
 
+import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.UserDTO;
 
 import java.util.List;
@@ -9,11 +10,11 @@ public interface UserService {
 
     List<UserDTO> findUsers(UserDTO user);
 
-    UserDTO findUser(long id);
+    UserDTO findUser(String id) throws ServiceException;
 
     UserDTO saveUser(UserDTO user);
 
-    UserDTO updateUser(long id, UserDTO user);
+    UserDTO updateUser(String id, UserDTO user);
 
-    void deleteUser(long id);
+    void deleteUser(String id) throws ServiceException;
 }
