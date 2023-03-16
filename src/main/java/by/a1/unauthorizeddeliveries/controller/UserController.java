@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries.controller;
 
+import by.a1.unauthorizeddeliveries.model.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -35,11 +38,11 @@ public class UserController {
     )
     public List<UserDTO> getUsers(@Parameter(description = "Page number(def: 0,min: 0)")
                                  @RequestParam(defaultValue = "0") @Min(0) int page,
-                                 @Parameter(description = "Page size(def: 10, min: 1)")
+                                  @Parameter(description = "Page size(def: 10, min: 1)")
                                  @RequestParam(defaultValue = "10") @Min(1) int size,
-                                 @Parameter(description = "Filter by field(def: id)")
+                                  @Parameter(description = "Filter by field(def: id)")
                                  @RequestParam(defaultValue = "id") @NotBlank String filter,
-                                 @Parameter(description = "asc or desc(def: asc)")
+                                  @Parameter(description = "asc or desc(def: asc)")
                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
         return service.findUsers(page,size,filter,direction);
     }
