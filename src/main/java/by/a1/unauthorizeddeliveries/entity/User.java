@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @Column(name = "username", nullable = false, unique = true)
