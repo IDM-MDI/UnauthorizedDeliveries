@@ -11,11 +11,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -37,9 +33,11 @@ public class Posting {
     @JoinColumn(name = "username")
     private User username;
     @Column(name = "item_position")
-    private long itemPosition;
+    private Long itemPosition;
     @Column(name = "quantity")
     private int quantity;
+    @Column(name = "authorize_delivery")
+    private Boolean authorizeDelivery;
     @Column(name = "contract_date")
     private LocalDate contractDate;
     @Column(name = "posting_date")
