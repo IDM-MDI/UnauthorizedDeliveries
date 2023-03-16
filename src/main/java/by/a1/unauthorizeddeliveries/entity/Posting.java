@@ -31,6 +31,6 @@ public class Posting {
     @JoinColumn(name = "header_id")
     private DocumentHeader header;
     @OneToMany
-    @JoinColumn(name = "item_info_id")
-    private List<ItemInfo> info;
+    @JoinColumn(name = "posting_id",nullable = false)
+    private List<Material> materials;
 }

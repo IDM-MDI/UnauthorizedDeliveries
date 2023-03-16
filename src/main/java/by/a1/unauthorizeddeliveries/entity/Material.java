@@ -14,12 +14,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "posting_item_info")
+@Table(name = "posting_materials")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemInfo {
+public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "document_header")
+@Table(name = "document_headers")
 @Data
 @Builder
 @AllArgsConstructor
