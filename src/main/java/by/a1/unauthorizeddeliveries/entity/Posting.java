@@ -6,14 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "postings")
@@ -26,20 +27,10 @@ public class Posting {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private User username;
-    @Column(name = "item_position")
-    private Long itemPosition;
-    @Column(name = "quantity")
-    private int quantity;
-    @Column(name = "authorize_delivery")
-    private Boolean authorizeDelivery;
-    @Column(name = "contract_date")
-    private LocalDate contractDate;
-    @Column(name = "posting_date")
-    private LocalDate postingDate;
+    @OneToOne
+    @JoinColumn(name = "header_id")
+    private DocumentHeader header;
+    @OneToMany
+    @JoinColumn(name = "posting_id",nullable = false)
+    private List<Material> materials;
 }

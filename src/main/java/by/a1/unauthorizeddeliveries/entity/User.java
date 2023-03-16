@@ -19,12 +19,12 @@ public class User {
     @Id
     @Column(name = "username", nullable = false, unique = true)
     private String username;
-    @Column(name = "application")
+    @Column(name = "application", nullable = false)
     private String application;
-    @Column(name = "job")
+    @Column(name = "job", nullable = false)
     private String job;
-    @Column(name = "department")
+    @Column(name = "department", nullable = false)
     private String department;
-    @Column(name = "active")
+    @Column(name = "active", nullable = false)
     private Boolean active;
 }
