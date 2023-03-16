@@ -22,10 +22,10 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private Integer amount;
-    @Column(name = "currency")
+    @Column(name = "currency", nullable = false)
     private String currency;
 }

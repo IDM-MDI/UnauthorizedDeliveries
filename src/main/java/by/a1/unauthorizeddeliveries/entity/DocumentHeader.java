@@ -29,12 +29,12 @@ public class DocumentHeader {
     @Column(name = "posting_number", nullable = false)
     private Long postingNumber;
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", nullable = false)
     private User username;
-    @Column(name = "authorize_delivery")
+    @Column(name = "authorize_delivery", nullable = false)
     private Boolean authorizeDelivery;
-    @Column(name = "contract_date")
+    @Column(name = "contract_date", nullable = false)
     private LocalDate contractDate;
-    @Column(name = "posting_date")
+    @Column(name = "posting_date", nullable = false)
     private LocalDate postingDate;
 }

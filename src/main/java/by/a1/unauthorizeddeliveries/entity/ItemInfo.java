@@ -25,12 +25,12 @@ public class ItemInfo {
     @Column(name = "id", nullable = false)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
-    @Column(name = "item_position")
+    @Column(name = "item_position", nullable = false)
     private Long itemPosition;
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
-    @Column(name = "measurement_unit")
+    @Column(name = "measurement_unit", nullable = false)
     private String measurementUnit;
 }
