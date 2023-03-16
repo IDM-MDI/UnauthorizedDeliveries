@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "postings")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Posting {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
