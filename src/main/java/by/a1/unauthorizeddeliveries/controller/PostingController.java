@@ -1,6 +1,6 @@
 package by.a1.unauthorizeddeliveries.controller;
 
-import by.a1.unauthorizeddeliveries.model.PostingDTO;
+import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,13 +36,13 @@ public class PostingController {
             responseCode = "200",
             description = "Postings found"
     )
-    public List<PostingDTO> getPostings(@Parameter(description = "Page number(def: 0,min: 0)")
+    public List<PostingResponseDTO> getPostings(@Parameter(description = "Page number(def: 0,min: 0)")
                                   @RequestParam(defaultValue = "0") @Min(0) int page,
-                                        @Parameter(description = "Page size(def: 10, min: 1)")
+                                                @Parameter(description = "Page size(def: 10, min: 1)")
                                   @RequestParam(defaultValue = "10") @Min(1) int size,
-                                        @Parameter(description = "Filter by field(def: id)")
+                                                @Parameter(description = "Filter by field(def: id)")
                                   @RequestParam(defaultValue = "id") @NotBlank String filter,
-                                        @Parameter(description = "asc or desc(def: asc)")
+                                                @Parameter(description = "asc or desc(def: asc)")
                                   @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
         return service.findPostings(page,size,filter,direction);
     }
@@ -55,7 +55,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public PostingDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) throws ServiceException {
+    public PostingResponseDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) throws ServiceException {
         return service.findPosting(id);
     }
 
@@ -68,7 +68,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public List<PostingDTO> findPosting(@Parameter(description = "Postings search by") PostingDTO posting) throws ServiceException {
+    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingResponseDTO posting) throws ServiceException {
         return service.findPostings(posting);
     }
 
@@ -81,7 +81,7 @@ public class PostingController {
             responseCode = "201",
             description = "Posting created"
     )
-    public PostingDTO savePosting(@RequestBody @Valid PostingDTO posting) throws ServiceException {
+    public PostingResponseDTO savePosting(@RequestBody @Valid PostingResponseDTO posting) throws ServiceException {
         return service.savePosting(posting);
     }
     @PutMapping("/{id}")
@@ -93,8 +93,8 @@ public class PostingController {
             responseCode = "200",
             description = "Posting updated"
     )
-    public PostingDTO updatePosting(@PathVariable @Min(1) long id,
-                              @RequestBody @Valid PostingDTO posting) throws ServiceException {
+    public PostingResponseDTO updatePosting(@PathVariable @Min(1) long id,
+                                            @RequestBody @Valid PostingResponseDTO posting) throws ServiceException {
         return service.updatePosting(id,posting);
     }
     @DeleteMapping("/{id}")
