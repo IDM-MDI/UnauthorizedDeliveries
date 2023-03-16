@@ -1,7 +1,9 @@
 package by.a1.unauthorizeddeliveries.controller;
 
+import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
+import by.a1.unauthorizeddeliveries.service.PostingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
