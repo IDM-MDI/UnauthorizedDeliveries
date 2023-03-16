@@ -2,9 +2,13 @@ package by.a1.unauthorizeddeliveries.service.impl;
 
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
 import by.a1.unauthorizeddeliveries.service.ItemService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDTO> findItems(int page, int size, String filter, String direction) {

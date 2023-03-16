@@ -10,11 +10,11 @@ public interface UserService {
 
     List<UserDTO> findUsers(UserDTO user);
 
-    UserDTO findUser(String id) throws ServiceException;
+    UserDTO findUser(String username) throws ServiceException;
 
     UserDTO saveUser(UserDTO user);
 
-    UserDTO updateUser(String id, UserDTO user);
+    UserDTO updateUser(String username, UserDTO user);
 
-    void deleteUser(String id) throws ServiceException;
+    void deleteUser(String username) throws ServiceException;
 }
