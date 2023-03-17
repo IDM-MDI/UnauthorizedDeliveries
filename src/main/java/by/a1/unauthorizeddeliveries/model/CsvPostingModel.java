@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class CsvPostingModel implements CsvBean {
     @CsvBindByName(column = "Mat. Doc.")
-    private String id;
+    private String postingNumber;
     @CsvBindByName(column = "Item")
     private String item;
     @CsvBindByName(column = "Doc. Date")
@@ -35,7 +35,7 @@ public class CsvPostingModel implements CsvBean {
 
     @Override
     public void trim() {
-        id = StringUtils.trim(id);
+        postingNumber = StringUtils.trim(postingNumber);
         item = StringUtils.trim(item);
         contractDate = StringUtils.trim(contractDate);
         postingDate = StringUtils.trim(postingDate);

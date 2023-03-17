@@ -13,7 +13,7 @@ import java.util.List;
 class CsvPostingParserTest {
     private static final String PATH = "src/test/resources/csv/postings.csv";
     private static final CsvPostingModel MODEL = CsvPostingModel.builder()
-            .id("6777727662")
+            .postingNumber("6777727662")
             .item("\t2")
             .contractDate("\t25.07.2020")
             .postingDate("\t25.07.2020")
