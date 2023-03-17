@@ -36,6 +36,17 @@ CREATE TABLE document_headers
 ALTER TABLE document_headers
     ADD CONSTRAINT FK_DOCUMENT_HEADERS_ON_USERNAME FOREIGN KEY (username) REFERENCES users (username);
 
+-- POSTINGS
+CREATE TABLE postings
+(
+    id        BIGINT AUTO_INCREMENT NOT NULL,
+    header_id BIGINT,
+    CONSTRAINT pk_postings PRIMARY KEY (id)
+);
+
+ALTER TABLE postings
+    ADD CONSTRAINT FK_POSTINGS_ON_HEADER FOREIGN KEY (header_id) REFERENCES document_headers (id);
+
 -- POSTING MATERIALS
 CREATE TABLE posting_materials
 (
@@ -47,14 +58,3 @@ CREATE TABLE posting_materials
     posting_id       BIGINT                NOT NULL,
     CONSTRAINT pk_posting_materials PRIMARY KEY (id)
 );
-
--- POSTINGS
-CREATE TABLE postings
-(
-    id        BIGINT AUTO_INCREMENT NOT NULL,
-    header_id BIGINT,
-    CONSTRAINT pk_postings PRIMARY KEY (id)
-);
-
-ALTER TABLE postings
-    ADD CONSTRAINT FK_POSTINGS_ON_HEADER FOREIGN KEY (header_id) REFERENCES document_headers (id);
