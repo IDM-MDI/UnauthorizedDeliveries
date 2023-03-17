@@ -1,5 +1,7 @@
 package by.a1.unauthorizeddeliveries.controller;
 
+import by.a1.unauthorizeddeliveries.model.DocumentHeaderDTO;
+import by.a1.unauthorizeddeliveries.model.MaterialDTO;
 import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
 import by.a1.unauthorizeddeliveries.service.PostingService;
@@ -10,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,8 +72,16 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingRequestDTO posting) {
-        return service.findPostings(posting);
+    public List<PostingResponseDTO> findPosting(
+            @Parameter(description = "Postings search by header") DocumentHeaderDTO header,
+            @Parameter(description = "Postings search by header") MaterialDTO material
+            ) {
+        return service.findPostings(
+                PostingRequestDTO.builder()
+                        .documentHeader(header)
+                        .material(material)
+                        .build()
+        );
     }
 
     @PostMapping
