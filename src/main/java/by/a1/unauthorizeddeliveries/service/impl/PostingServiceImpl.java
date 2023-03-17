@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static by.a1.unauthorizeddeliveries.exception.ExceptionStatus.ENTITY_NOT_FOUND;
 import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
 @Service
@@ -44,7 +45,7 @@ public class PostingServiceImpl implements PostingService {
     public PostingResponseDTO findPosting(long id) {
         return repository.findById(id)
                 .map(this::mapWithMaterials)
-                .orElseThrow(() -> new ServiceException("User not found"));
+                .orElseThrow(() -> new ServiceException(ENTITY_NOT_FOUND.toString()));
     }
 
     @Override
@@ -66,7 +67,7 @@ public class PostingServiceImpl implements PostingService {
     @Transactional
     public void deletePosting(long id) {
         if(!repository.existsById(id)) {
-            throw new ServiceException();
+            throw new ServiceException(ENTITY_NOT_FOUND.toString());
         }
         repository.deleteById(id);
     }

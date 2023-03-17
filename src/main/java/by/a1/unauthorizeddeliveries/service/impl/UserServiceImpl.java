@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static by.a1.unauthorizeddeliveries.exception.ExceptionStatus.USER_NOT_FOUND;
 import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
 @Service
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO findUser(String username) {
         return repository.findById(username)
                 .map(user -> mapper.map(user, UserDTO.class))
-                .orElseThrow(() -> new ServiceException("User not found"));
+                .orElseThrow(() -> new ServiceException(USER_NOT_FOUND.toString()));
     }
 
     @Override
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String username) {
         if(!repository.existsById(username)) {
-            throw new ServiceException();
+            throw new ServiceException(USER_NOT_FOUND.toString());
         }
         repository.deleteById(username);
     }

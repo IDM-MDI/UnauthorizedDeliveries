@@ -1,6 +1,7 @@
 package by.a1.unauthorizeddeliveries.service.impl;
 
 import by.a1.unauthorizeddeliveries.entity.Item;
+import by.a1.unauthorizeddeliveries.exception.ExceptionStatus;
 import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
 import by.a1.unauthorizeddeliveries.repository.ItemRepository;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static by.a1.unauthorizeddeliveries.exception.ExceptionStatus.ENTITY_NOT_FOUND;
 import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
 @Service
@@ -45,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemDTO findItem(long id) {
         return repository.findById(id)
                 .map(user -> mapper.map(user, ItemDTO.class))
-                .orElseThrow(() -> new ServiceException("User not found"));
+                .orElseThrow(() -> new ServiceException(ENTITY_NOT_FOUND.toString()));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void deleteItem(long id) {
         if(!repository.existsById(id)) {
-            throw new ServiceException();
+            throw new ServiceException(ENTITY_NOT_FOUND.toString());
         }
         repository.deleteById(id);
     }
