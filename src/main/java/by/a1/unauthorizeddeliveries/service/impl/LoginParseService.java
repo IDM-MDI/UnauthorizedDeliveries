@@ -29,6 +29,7 @@ public class LoginParseService implements ParseService {
     public void parseToDB() throws IOException {
         List<CsvLoginModel> parsedModels = parser.parse(path);
         parsedModels.stream()
+                .peek(CsvLoginModel::trim)
                 .map(csvLoginModel ->
                         UserDTO.builder()
                                 .application(csvLoginModel.getApplication())
