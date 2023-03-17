@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries;
 
+import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.service.ParseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
