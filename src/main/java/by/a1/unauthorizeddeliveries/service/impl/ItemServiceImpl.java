@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
@@ -34,6 +35,12 @@ public class ItemServiceImpl implements ItemService {
         return repository.findById(id)
                 .map(user -> mapper.map(user, ItemDTO.class))
                 .orElseThrow(() -> new ServiceException("User not found"));
+    }
+
+    @Override
+    public Optional<ItemDTO> findItem(String description) {
+        return repository.findByDescription(description)
+                .map(user -> mapper.map(user, ItemDTO.class));
     }
 
     @Override
