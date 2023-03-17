@@ -1,6 +1,5 @@
 package by.a1.unauthorizeddeliveries.controller;
 
-import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
 import by.a1.unauthorizeddeliveries.service.PostingService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posting")
+@RequestMapping("/api/v1/postings")
 @RequiredArgsConstructor
 public class PostingController {
     private final PostingService service;
@@ -46,7 +44,7 @@ public class PostingController {
                                                 @Parameter(description = "Filter by field(def: id)")
                                   @RequestParam(defaultValue = "id") @NotBlank String filter,
                                                 @Parameter(description = "asc or desc(def: asc)")
-                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
+                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) {
         return service.findPostings(page,size,filter,direction);
     }
     @GetMapping(value = "/{id}")
@@ -58,7 +56,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public PostingResponseDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) throws ServiceException {
+    public PostingResponseDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) {
         return service.findPosting(id);
     }
 
@@ -71,7 +69,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingRequestDTO posting) throws ServiceException {
+    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingRequestDTO posting) {
         return service.findPostings(posting);
     }
 
@@ -84,7 +82,7 @@ public class PostingController {
             responseCode = "201",
             description = "Posting created"
     )
-    public PostingResponseDTO savePosting(@RequestBody @Valid PostingRequestDTO posting) throws ServiceException {
+    public PostingResponseDTO savePosting(@RequestBody @Valid PostingRequestDTO posting) {
         return service.savePosting(posting);
     }
     @DeleteMapping("/{id}")
@@ -97,7 +95,7 @@ public class PostingController {
             description = "Posting deleted"
     )
 
-    public ResponseEntity<String> deletePostings(@PathVariable @Min(1) long id) throws ServiceException {
+    public ResponseEntity<String> deletePostings(@PathVariable @Min(1) long id) {
         service.deletePosting(id);
         return ResponseEntity.ok("The Posting successfully was deleted");
     }

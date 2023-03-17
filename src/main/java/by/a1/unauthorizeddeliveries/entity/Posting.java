@@ -6,15 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Table(name = "postings")
@@ -30,7 +27,4 @@ public class Posting {
     @OneToOne
     @JoinColumn(name = "header_id")
     private DocumentHeader header;
-    @OneToMany
-    @JoinColumn(name = "posting_id",nullable = false)
-    private List<Material> materials;
 }

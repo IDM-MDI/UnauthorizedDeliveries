@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUser(String username) throws ServiceException {
+    public UserDTO findUser(String username) {
         return repository.findById(username)
                 .map(user -> mapper.map(user, UserDTO.class))
                 .orElseThrow(() -> new ServiceException("User not found"));
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String username) throws ServiceException {
+    public void deleteUser(String username) {
         if(!repository.existsById(username)) {
             throw new ServiceException();
         }

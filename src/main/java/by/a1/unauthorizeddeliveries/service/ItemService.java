@@ -8,10 +8,8 @@ import java.util.Optional;
 
 public interface ItemService {
     List<ItemDTO> findItems(int page, int size, String filter, String direction);
-
     ItemDTO findItem(long id) throws ServiceException;
     Optional<ItemDTO> findItem(String description,int amount);
-
     List<ItemDTO> findItems(ItemDTO item);
 
     ItemDTO saveItem(ItemDTO item);

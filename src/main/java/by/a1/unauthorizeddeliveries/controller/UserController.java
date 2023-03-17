@@ -1,6 +1,5 @@
 package by.a1.unauthorizeddeliveries.controller;
 
-import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.UserDTO;
 import by.a1.unauthorizeddeliveries.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
@@ -45,7 +44,7 @@ public class UserController {
                                   @Parameter(description = "Filter by field(def: username)")
                                  @RequestParam(defaultValue = "username") @NotBlank String filter,
                                   @Parameter(description = "asc or desc(def: asc)")
-                                 @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
+                                 @RequestParam(defaultValue = "asc") @NotBlank String direction) {
         return service.findUsers(page,size,filter,direction);
     }
     @GetMapping(value = "/{username}")
@@ -57,7 +56,7 @@ public class UserController {
             responseCode = "200",
             description = "User found"
     )
-    public UserDTO getUser(@Parameter(description = "User username") @PathVariable @Min(1) String username) throws ServiceException {
+    public UserDTO getUser(@Parameter(description = "User username") @PathVariable @Min(1) String username) {
         return service.findUser(username);
     }
 
@@ -70,7 +69,7 @@ public class UserController {
             responseCode = "200",
             description = "User found"
     )
-    public List<UserDTO> findUser(@Parameter(description = "Users search by") UserDTO user) throws ServiceException {
+    public List<UserDTO> findUser(@Parameter(description = "Users search by") UserDTO user) {
         return service.findUsers(user);
     }
 
@@ -83,7 +82,7 @@ public class UserController {
             responseCode = "201",
             description = "User created"
     )
-    public UserDTO saveUser(@RequestBody @Valid UserDTO user) throws ServiceException {
+    public UserDTO saveUser(@RequestBody @Valid UserDTO user) {
         return service.saveUser(user);
     }
     @PutMapping("/{username}")
@@ -96,7 +95,7 @@ public class UserController {
             description = "User updated"
     )
     public UserDTO updateUser(@PathVariable @Min(1) String username,
-                              @RequestBody @Valid UserDTO user) throws ServiceException {
+                              @RequestBody @Valid UserDTO user) {
         return service.updateUser(username,user);
     }
     @DeleteMapping("/{username}")
@@ -109,7 +108,7 @@ public class UserController {
             description = "User deleted"
     )
     
-    public ResponseEntity<String> deleteUsers(@PathVariable @Min(1) String username) throws ServiceException {
+    public ResponseEntity<String> deleteUsers(@PathVariable @Min(1) String username) {
         service.deleteUser(username);
         return ResponseEntity.ok("The user successfully was deleted");
     }

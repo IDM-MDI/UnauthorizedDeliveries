@@ -21,7 +21,7 @@ public class UserDTO {
     private String job;
     @Schema(description = "Department which he work")
     private String department;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "Is current user active")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean active;
 }

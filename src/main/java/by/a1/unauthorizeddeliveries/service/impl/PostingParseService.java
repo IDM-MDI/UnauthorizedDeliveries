@@ -1,5 +1,6 @@
 package by.a1.unauthorizeddeliveries.service.impl;
 
+import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.CsvPostingModel;
 import by.a1.unauthorizeddeliveries.model.DocumentHeaderDTO;
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class PostingParseService implements ParseService {
     private final ItemService itemService;
     private final CsvPostingParser parser;
     @Override
-    public void parseToDB() throws IOException {
+    public void parseToDB() throws IOException, ServiceException {
         parser.parse(path)
                 .stream()
                 .peek(CsvPostingModel::trim)

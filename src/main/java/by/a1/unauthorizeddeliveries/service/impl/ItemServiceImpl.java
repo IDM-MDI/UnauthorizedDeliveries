@@ -1,11 +1,8 @@
 package by.a1.unauthorizeddeliveries.service.impl;
 
 import by.a1.unauthorizeddeliveries.entity.Item;
-import by.a1.unauthorizeddeliveries.entity.Material;
-import by.a1.unauthorizeddeliveries.entity.Posting;
 import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
-import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.repository.ItemRepository;
 import by.a1.unauthorizeddeliveries.service.ItemService;
 import org.modelmapper.ModelMapper;
@@ -45,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDTO findItem(long id) throws ServiceException {
+    public ItemDTO findItem(long id) {
         return repository.findById(id)
                 .map(user -> mapper.map(user, ItemDTO.class))
                 .orElseThrow(() -> new ServiceException("User not found"));
@@ -67,6 +64,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDTO saveItem(ItemDTO item) {
+        Optional<ItemDTO> byDescription = findItem(item.getDescription(), item.getAmount());
+        if(byDescription.isPresent()) {
+            return byDescription.get();
+        }
         Item savedItem = repository.save(mapper.map(item, Item.class));
         return mapper.map(savedItem,ItemDTO.class);
     }
@@ -78,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void deleteItem(long id) throws ServiceException {
+    public void deleteItem(long id) {
         if(!repository.existsById(id)) {
             throw new ServiceException();
         }

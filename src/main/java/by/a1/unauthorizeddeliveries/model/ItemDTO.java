@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDTO {
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "item id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     @Schema(description = "small description of current item")
     private String description;

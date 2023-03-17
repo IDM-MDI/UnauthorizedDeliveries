@@ -5,8 +5,6 @@ import by.a1.unauthorizeddeliveries.model.UserDTO;
 import by.a1.unauthorizeddeliveries.service.ParseService;
 import by.a1.unauthorizeddeliveries.service.UserService;
 import by.a1.unauthorizeddeliveries.util.impl.CsvLoginParser;
-import org.apache.commons.lang3.StringUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -44,6 +44,8 @@ CREATE TABLE postings
     CONSTRAINT pk_postings PRIMARY KEY (id)
 );
 
+ALTER TABLE items
+    ADD CONSTRAINT uc_items_description UNIQUE (description,amount);
 ALTER TABLE postings
     ADD CONSTRAINT FK_POSTINGS_ON_HEADER FOREIGN KEY (header_id) REFERENCES document_headers (id);
 ALTER TABLE posting_materials
