@@ -1,6 +1,7 @@
 package by.a1.unauthorizeddeliveries.controller;
 
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
+import by.a1.unauthorizeddeliveries.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/item")
+@RequestMapping("/api/v1/items")
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService service;
@@ -36,12 +39,12 @@ public class ItemController {
     )
     public List<ItemDTO> getItems(@Parameter(description = "Page number(def: 0,min: 0)")
                                         @RequestParam(defaultValue = "0") @Min(0) int page,
-                                        @Parameter(description = "Page size(def: 10, min: 1)")
+                                  @Parameter(description = "Page size(def: 10, min: 1)")
                                         @RequestParam(defaultValue = "10") @Min(1) int size,
-                                        @Parameter(description = "Filter by field(def: id)")
+                                  @Parameter(description = "Filter by field(def: id)")
                                         @RequestParam(defaultValue = "id") @NotBlank String filter,
-                                        @Parameter(description = "asc or desc(def: asc)")
-                                        @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
+                                  @Parameter(description = "asc or desc(def: asc)")
+                                        @RequestParam(defaultValue = "asc") @NotBlank String direction) {
         return service.findItems(page,size,filter,direction);
     }
     @GetMapping(value = "/{id}")
@@ -53,7 +56,7 @@ public class ItemController {
             responseCode = "200",
             description = "Item found"
     )
-    public ItemDTO getItem(@Parameter(description = "Item ID") @PathVariable @Min(1) long id) throws ServiceException {
+    public ItemDTO getItem(@Parameter(description = "Item ID") @PathVariable @Min(1) long id) {
         return service.findItem(id);
     }
 
@@ -66,7 +69,7 @@ public class ItemController {
             responseCode = "200",
             description = "Item found"
     )
-    public List<ItemDTO> findItem(@Parameter(description = "Items search by") ItemDTO item) throws ServiceException {
+    public List<ItemDTO> findItem(@Parameter(description = "Items search by") ItemDTO item) {
         return service.findItems(item);
     }
 
@@ -79,7 +82,7 @@ public class ItemController {
             responseCode = "201",
             description = "Item created"
     )
-    public ItemDTO saveItem(@RequestBody @Valid ItemDTO item) throws ServiceException {
+    public ItemDTO saveItem(@RequestBody @Valid ItemDTO item) {
         return service.saveItem(item);
     }
     @PutMapping("/{id}")
@@ -92,7 +95,7 @@ public class ItemController {
             description = "Item updated"
     )
     public ItemDTO updateItem(@PathVariable @Min(1) long id,
-                                    @RequestBody @Valid ItemDTO item) throws ServiceException {
+                                    @RequestBody @Valid ItemDTO item) {
         return service.updateItem(id,item);
     }
     @DeleteMapping("/{id}")
@@ -105,7 +108,7 @@ public class ItemController {
             description = "Item deleted"
     )
 
-    public ResponseEntity<String> deleteItems(@PathVariable @Min(1) long id) throws ServiceException {
+    public ResponseEntity<String> deleteItems(@PathVariable @Min(1) long id) {
         service.deleteItem(id);
         return ResponseEntity.ok("The Item successfully was deleted");
     }

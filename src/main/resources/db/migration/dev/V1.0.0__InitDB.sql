@@ -1,3 +1,4 @@
+-- USERS
 CREATE TABLE users
 (
     username    VARCHAR(255) NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE users
     CONSTRAINT pk_users PRIMARY KEY (username)
 );
 
+-- ITEMS
 CREATE TABLE items
 (
     id          BIGINT AUTO_INCREMENT NOT NULL,
@@ -16,7 +18,10 @@ CREATE TABLE items
     currency    VARCHAR(255)          NOT NULL,
     CONSTRAINT pk_items PRIMARY KEY (id)
 );
+ALTER TABLE items
+    ADD CONSTRAINT uc_items_description UNIQUE (description,amount);
 
+-- DOCUMENT HEADER
 CREATE TABLE document_headers
 (
     id                 BIGINT AUTO_INCREMENT NOT NULL,
@@ -27,6 +32,22 @@ CREATE TABLE document_headers
     posting_date       date                  NOT NULL,
     CONSTRAINT pk_document_headers PRIMARY KEY (id)
 );
+
+ALTER TABLE document_headers
+    ADD CONSTRAINT FK_DOCUMENT_HEADERS_ON_USERNAME FOREIGN KEY (username) REFERENCES users (username);
+
+-- POSTINGS
+CREATE TABLE postings
+(
+    id        BIGINT AUTO_INCREMENT NOT NULL,
+    header_id BIGINT,
+    CONSTRAINT pk_postings PRIMARY KEY (id)
+);
+
+ALTER TABLE postings
+    ADD CONSTRAINT FK_POSTINGS_ON_HEADER FOREIGN KEY (header_id) REFERENCES document_headers (id);
+
+-- POSTING MATERIALS
 CREATE TABLE posting_materials
 (
     id               BIGINT AUTO_INCREMENT NOT NULL,
@@ -37,18 +58,3 @@ CREATE TABLE posting_materials
     posting_id       BIGINT                NOT NULL,
     CONSTRAINT pk_posting_materials PRIMARY KEY (id)
 );
-CREATE TABLE postings
-(
-    id        BIGINT NOT NULL,
-    header_id BIGINT,
-    CONSTRAINT pk_postings PRIMARY KEY (id)
-);
-
-ALTER TABLE postings
-    ADD CONSTRAINT FK_POSTINGS_ON_HEADER FOREIGN KEY (header_id) REFERENCES document_headers (id);
-ALTER TABLE posting_materials
-    ADD CONSTRAINT FK_POSTING_MATERIALS_ON_ITEM FOREIGN KEY (item_id) REFERENCES items (id);
-ALTER TABLE posting_materials
-    ADD CONSTRAINT FK_POSTING_MATERIALS_ON_POSTING FOREIGN KEY (posting_id) REFERENCES postings (id);
-ALTER TABLE document_headers
-    ADD CONSTRAINT FK_DOCUMENT_HEADERS_ON_USERNAME FOREIGN KEY (username) REFERENCES users (username);

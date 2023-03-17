@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Schema(description = "PostingResponse")
 public class PostingResponseDTO {
+    @Schema(description = "posting id")
+    private Long id;
     @Schema(description = "document header")
     private DocumentHeaderDTO documentHeader;
     @Schema(description = "all materials of posting")

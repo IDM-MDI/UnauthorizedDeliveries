@@ -27,6 +27,9 @@ public class Material {
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+    @ManyToOne
+    @JoinColumn(name = "posting_id",nullable = false)
+    private Posting posting;
     @Column(name = "item_position", nullable = false)
     private Long itemPosition;
     @Column(name = "quantity", nullable = false)

@@ -1,7 +1,10 @@
 package by.a1.unauthorizeddeliveries.controller;
 
+import by.a1.unauthorizeddeliveries.model.DocumentHeaderDTO;
+import by.a1.unauthorizeddeliveries.model.MaterialDTO;
 import by.a1.unauthorizeddeliveries.model.PostingRequestDTO;
 import by.a1.unauthorizeddeliveries.model.PostingResponseDTO;
+import by.a1.unauthorizeddeliveries.service.PostingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,12 +12,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posting")
+@RequestMapping("/api/v1/postings")
 @RequiredArgsConstructor
 public class PostingController {
     private final PostingService service;
@@ -44,7 +47,7 @@ public class PostingController {
                                                 @Parameter(description = "Filter by field(def: id)")
                                   @RequestParam(defaultValue = "id") @NotBlank String filter,
                                                 @Parameter(description = "asc or desc(def: asc)")
-                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) throws ServiceException {
+                                  @RequestParam(defaultValue = "asc") @NotBlank String direction) {
         return service.findPostings(page,size,filter,direction);
     }
     @GetMapping(value = "/{id}")
@@ -56,7 +59,7 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public PostingResponseDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) throws ServiceException {
+    public PostingResponseDTO getPosting(@Parameter(description = "Posting ID") @PathVariable @Min(1) long id) {
         return service.findPosting(id);
     }
 
@@ -69,8 +72,17 @@ public class PostingController {
             responseCode = "200",
             description = "Posting found"
     )
-    public List<PostingResponseDTO> findPosting(@Parameter(description = "Postings search by") PostingResponseDTO posting) throws ServiceException {
-        return service.findPostings(posting);
+    public List<PostingResponseDTO> findPosting(
+            @Parameter(description = "Postings search by header") DocumentHeaderDTO header,
+            @Parameter(description = "Postings search by header") MaterialDTO material
+            ) {
+
+        return service.findPostings(
+                PostingRequestDTO.builder()
+                        .documentHeader(header)
+                        .material(material)
+                        .build()
+        );
     }
 
     @PostMapping
@@ -82,7 +94,7 @@ public class PostingController {
             responseCode = "201",
             description = "Posting created"
     )
-    public PostingResponseDTO savePosting(@RequestBody @Valid PostingRequestDTO posting) throws ServiceException {
+    public PostingResponseDTO savePosting(@RequestBody @Valid PostingRequestDTO posting) {
         return service.savePosting(posting);
     }
     @DeleteMapping("/{id}")
@@ -95,7 +107,7 @@ public class PostingController {
             description = "Posting deleted"
     )
 
-    public ResponseEntity<String> deletePostings(@PathVariable @Min(1) long id) throws ServiceException {
+    public ResponseEntity<String> deletePostings(@PathVariable @Min(1) long id) {
         service.deletePosting(id);
         return ResponseEntity.ok("The Posting successfully was deleted");
     }
