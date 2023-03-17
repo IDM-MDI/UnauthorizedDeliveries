@@ -39,7 +39,7 @@ CREATE TABLE posting_materials
 );
 CREATE TABLE postings
 (
-    id        BIGINT NOT NULL,
+    id        BIGINT AUTO_INCREMENT NOT NULL,
     header_id BIGINT,
     CONSTRAINT pk_postings PRIMARY KEY (id)
 );

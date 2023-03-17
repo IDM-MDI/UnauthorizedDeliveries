@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Posting {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @OneToOne
