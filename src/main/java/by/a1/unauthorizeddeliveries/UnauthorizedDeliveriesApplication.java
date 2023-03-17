@@ -22,11 +22,6 @@ public class UnauthorizedDeliveriesApplication {
     public static void main(String[] args) {
         SpringApplication.run(UnauthorizedDeliveriesApplication.class, args);
     }
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
-
     @EventListener(ApplicationReadyEvent.class)
     public void initialParse() throws IOException {
         if(Arrays.asList(env.getActiveProfiles())
