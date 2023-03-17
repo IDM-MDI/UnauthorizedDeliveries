@@ -76,6 +76,7 @@ public class PostingController {
             @Parameter(description = "Postings search by header") DocumentHeaderDTO header,
             @Parameter(description = "Postings search by header") MaterialDTO material
             ) {
+
         return service.findPostings(
                 PostingRequestDTO.builder()
                         .documentHeader(header)

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +57,7 @@ public class UserController {
             responseCode = "200",
             description = "User found"
     )
-    public UserDTO getUser(@Parameter(description = "User username") @PathVariable @Min(1) String username) {
+    public UserDTO getUser(@Parameter(description = "User username") @PathVariable @NotBlank @Length(min = 2) String username) {
         return service.findUser(username);
     }
 
@@ -94,7 +95,7 @@ public class UserController {
             responseCode = "200",
             description = "User updated"
     )
-    public UserDTO updateUser(@PathVariable @Min(1) String username,
+    public UserDTO updateUser(@PathVariable @NotBlank @Length(min = 2) String username,
                               @RequestBody @Valid UserDTO user) {
         return service.updateUser(username,user);
     }
@@ -108,7 +109,7 @@ public class UserController {
             description = "User deleted"
     )
     
-    public ResponseEntity<String> deleteUsers(@PathVariable @Min(1) String username) {
+    public ResponseEntity<String> deleteUsers(@PathVariable @NotBlank @Length(min = 2) String username) {
         service.deleteUser(username);
         return ResponseEntity.ok("The user successfully was deleted");
     }
