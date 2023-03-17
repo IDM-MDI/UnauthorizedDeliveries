@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,7 @@ public class PostingParseService implements ParseService {
 
         return DocumentHeaderDTO.builder()
                 .username(model.getUsername())
-                .postingNumber(Long.parseLong(model.getPostingNumber()))
+                .postingNumber(Math.abs(Long.parseLong(model.getPostingNumber())))
                 .contractDate(LocalDate.parse(model.getContractDate(),DTF))
                 .postingDate(LocalDate.parse(model.getPostingDate(),DTF))
                 .build();
@@ -54,15 +53,15 @@ public class PostingParseService implements ParseService {
                         itemService.findItem(model.getMaterialDescription(),Integer.parseInt(model.getAmount().replace(",","")))
                                 .orElse(itemService.saveItem(createItem(model)))
                 )
-                .itemPosition(Long.parseLong(model.getItem()))
-                .quantity(Integer.parseInt(model.getQuantity()))
+                .itemPosition(Math.abs(Long.parseLong(model.getItem())))
+                .quantity(Math.abs(Integer.parseInt(model.getQuantity())))
                 .measurementUnit(model.getMeasurementUnit())
                 .build();
     }
     private ItemDTO createItem(CsvPostingModel model) {
         return ItemDTO.builder()
                 .description(model.getMaterialDescription())
-                .amount(Integer.parseInt(model.getAmount().replace(",","")))
+                .amount(Math.abs(Integer.parseInt(model.getAmount().replace(",",""))))
                 .currency(model.getCurrency())
                 .build();
     }
