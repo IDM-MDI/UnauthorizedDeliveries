@@ -73,7 +73,8 @@ public class PostingServiceImpl implements PostingService {
     }
 
     private PostingResponseDTO createNewPosting(PostingRequestDTO posting) {
-        Posting savedPosting = repository.save(mapper.map(posting, Posting.class));
+        Posting entity = mapper.map(posting, Posting.class);
+        Posting savedPosting = repository.save(entity);
         return mapper.map(savedPosting, PostingResponseDTO.class);
     }
 
