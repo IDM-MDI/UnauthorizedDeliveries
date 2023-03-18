@@ -5,6 +5,7 @@ CREATE TABLE users
     application VARCHAR(255) NOT NULL,
     job         VARCHAR(255) NOT NULL,
     department  VARCHAR(255) NOT NULL,
+    status      VARCHAR(255) NOT NULL,
     active      BOOLEAN      NOT NULL,
     CONSTRAINT pk_users PRIMARY KEY (username)
 );
@@ -16,6 +17,7 @@ CREATE TABLE items
     description VARCHAR(255)          NOT NULL,
     amount      INT                   NOT NULL,
     currency    VARCHAR(255)          NOT NULL,
+    status      VARCHAR(255)          NOT NULL,
     CONSTRAINT pk_items PRIMARY KEY (id)
 );
 ALTER TABLE items

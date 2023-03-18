@@ -25,6 +25,9 @@ public class User {
     private String job;
     @Column(name = "department", nullable = false)
     private String department;
+    @Column(name = "status",nullable = false)
+    private String status;
+
     @Column(name = "active", nullable = false)
     private Boolean active;
 }
