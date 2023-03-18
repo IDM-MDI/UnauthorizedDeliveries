@@ -6,6 +6,7 @@ import by.a1.unauthorizeddeliveries.model.ItemDTO;
 import by.a1.unauthorizeddeliveries.model.StatusModel;
 import by.a1.unauthorizeddeliveries.repository.ItemRepository;
 import by.a1.unauthorizeddeliveries.service.ItemService;
+import by.a1.unauthorizeddeliveries.util.ExampleUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDTO> findItems(ItemDTO item) {
-        return repository.findAll(Example.of(mapper.map(item, Item.class)))
+        return repository.findAll(Example.of(mapper.map(item, Item.class), ExampleUtil.ENTITY_SEARCH_MATCHER))
                 .stream()
                 .map(i -> mapper.map(i, ItemDTO.class))
                 .toList();
