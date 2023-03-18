@@ -2,6 +2,7 @@ package by.a1.unauthorizeddeliveries.service.impl;
 
 import by.a1.unauthorizeddeliveries.entity.User;
 import by.a1.unauthorizeddeliveries.exception.ServiceException;
+import by.a1.unauthorizeddeliveries.model.StatusModel;
 import by.a1.unauthorizeddeliveries.model.UserDTO;
 import by.a1.unauthorizeddeliveries.repository.UserRepository;
 import by.a1.unauthorizeddeliveries.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,12 +22,13 @@ import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
 @Service
 @RequiredArgsConstructor
+@EnableTransactionManagement(proxyTargetClass = true)
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final ModelMapper mapper;
     @Override
     public List<UserDTO> findUsers(int page, int size, String filter, String direction) {
-        return repository.findAll(PageRequest.of(page,size, getDirection(Sort.by(filter),direction)))
+        return repository.findByStatus(StatusModel.ACTIVE.name(), PageRequest.of(page,size, getDirection(Sort.by(filter),direction)))
                 .stream()
                 .map(user -> mapper.map(user, UserDTO.class))
                 .toList();
@@ -40,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findUser(String username) {
-        return repository.findById(username)
+        return repository.findByUsernameAndStatus(username,StatusModel.ACTIVE.name())
                 .map(user -> mapper.map(user, UserDTO.class))
                 .orElseThrow(() -> new ServiceException(USER_NOT_FOUND.toString()));
     }
@@ -59,13 +63,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(String username) {
         if(!repository.existsById(username)) {
             throw new ServiceException(USER_NOT_FOUND.toString());
         }
-        repository.deleteById(username);
+        repository.setStatus(username, StatusModel.DELETED.name());
     }
     private void setDefaultUser(UserDTO user) {
         user.setActive(true);
+        user.setStatus(StatusModel.ACTIVE.name());
     }
 }

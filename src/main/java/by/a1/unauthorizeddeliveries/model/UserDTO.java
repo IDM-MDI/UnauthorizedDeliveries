@@ -31,6 +31,9 @@ public class UserDTO {
     @NotBlank
     @Length(min = 2)
     private String department;
+    @Schema(description = "user status")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String status;
     @Schema(description = "Is current user active")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean active;
