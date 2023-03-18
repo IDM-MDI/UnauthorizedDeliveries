@@ -29,4 +29,7 @@ public class ItemDTO {
     @NotBlank
     @Length(min = 1)
     private String currency;
+    @Schema(description = "item status")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String status;
 }
