@@ -60,7 +60,7 @@ public class PostingServiceImpl implements PostingService {
     @Override
     @Transactional
     public PostingResponseDTO savePosting(PostingRequestDTO posting) {
-        return isPostNumberExist(posting) ? createExistPosting(posting) : createNewPosting(posting);
+        return isPostNumberExist(posting) ? saveExistPosting(posting) : saveNewPosting(posting);
     }
 
     @Override
@@ -72,21 +72,22 @@ public class PostingServiceImpl implements PostingService {
         repository.deleteById(id);
     }
 
-    private PostingResponseDTO createNewPosting(PostingRequestDTO posting) {
+    private PostingResponseDTO saveNewPosting(PostingRequestDTO posting) {
         posting.setDocumentHeader(documentHeaderService.save(posting.getDocumentHeader()));
         Posting savedEntity = repository.save(mapper.map(posting,Posting.class));
-        PostingRequestDTO savedDTO = mapper.map(savedEntity, PostingRequestDTO.class);
-        savedDTO.setMaterial(posting.getMaterial());
-        materialService.save(savedDTO);
-        return findPosting(savedEntity.getId());
+        return saveMaterial(posting, savedEntity);
     }
 
-    private PostingResponseDTO createExistPosting(PostingRequestDTO posting) {
+    private PostingResponseDTO saveExistPosting(PostingRequestDTO posting) {
         Posting byPostingNumber = repository.findByHeader_PostingNumber(posting.getDocumentHeader().getPostingNumber());
-        PostingRequestDTO byPostingNumberDTO = mapper.map(byPostingNumber, PostingRequestDTO.class);
-        byPostingNumberDTO.setMaterial(posting.getMaterial());
+        return saveMaterial(posting, byPostingNumber);
+    }
+
+    private PostingResponseDTO saveMaterial(PostingRequestDTO clientPosting, Posting postingFromDB) {
+        PostingRequestDTO byPostingNumberDTO = mapper.map(postingFromDB, PostingRequestDTO.class);
+        byPostingNumberDTO.setMaterial(clientPosting.getMaterial());
         materialService.save(byPostingNumberDTO);
-        return findPosting(byPostingNumber.getId());
+        return findPosting(postingFromDB.getId());
     }
 
     private boolean isPostNumberExist(PostingRequestDTO posting) {
