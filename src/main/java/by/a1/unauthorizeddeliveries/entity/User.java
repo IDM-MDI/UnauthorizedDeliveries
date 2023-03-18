@@ -27,7 +27,6 @@ public class User {
     private String department;
     @Column(name = "status",nullable = false)
     private String status;
-
     @Column(name = "active", nullable = false)
     private Boolean active;
 }

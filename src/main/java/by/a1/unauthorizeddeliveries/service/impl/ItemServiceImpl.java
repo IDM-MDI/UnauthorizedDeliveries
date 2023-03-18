@@ -1,9 +1,9 @@
 package by.a1.unauthorizeddeliveries.service.impl;
 
 import by.a1.unauthorizeddeliveries.entity.Item;
-import by.a1.unauthorizeddeliveries.exception.ExceptionStatus;
 import by.a1.unauthorizeddeliveries.exception.ServiceException;
 import by.a1.unauthorizeddeliveries.model.ItemDTO;
+import by.a1.unauthorizeddeliveries.model.StatusModel;
 import by.a1.unauthorizeddeliveries.repository.ItemRepository;
 import by.a1.unauthorizeddeliveries.service.ItemService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +11,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,6 +22,7 @@ import static by.a1.unauthorizeddeliveries.exception.ExceptionStatus.ENTITY_NOT_
 import static by.a1.unauthorizeddeliveries.util.SortDirectionUtil.getDirection;
 
 @Service
+@EnableTransactionManagement(proxyTargetClass = true)
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository repository;
     private final ModelMapper mapper;
@@ -37,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDTO> findItems(int page, int size, String filter, String direction) {
-        return repository.findAll(PageRequest.of(page,size, getDirection(Sort.by(filter),direction)))
+        return repository.findByStatus(StatusModel.ACTIVE.name(), PageRequest.of(page,size, getDirection(Sort.by(filter),direction)))
                 .stream()
                 .map(user -> mapper.map(user, ItemDTO.class))
                 .toList();
@@ -45,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDTO findItem(long id) {
-        return repository.findById(id)
+        return repository.findByIdAndStatus(id,StatusModel.ACTIVE.name())
                 .map(user -> mapper.map(user, ItemDTO.class))
                 .orElseThrow(() -> new ServiceException(ENTITY_NOT_FOUND.toString()));
     }
@@ -66,12 +69,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDTO saveItem(ItemDTO item) {
-        Optional<ItemDTO> byDescription = findItem(item.getDescription(), item.getAmount());
-        if(byDescription.isPresent()) {
-            return byDescription.get();
-        }
-        Item savedItem = repository.save(mapper.map(item, Item.class));
-        return mapper.map(savedItem,ItemDTO.class);
+        return findItem(item.getDescription(), item.getAmount()).orElseGet(() -> saveNewItem(item));
     }
 
     @Override
@@ -81,10 +79,21 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public void deleteItem(long id) {
         if(!repository.existsById(id)) {
             throw new ServiceException(ENTITY_NOT_FOUND.toString());
         }
-        repository.deleteById(id);
+        repository.setStatus(id, StatusModel.DELETED.name());
+    }
+
+    private ItemDTO saveNewItem(ItemDTO item) {
+        Item entity = mapper.map(item, Item.class);
+        setDefaultItem(entity);
+        Item savedItem = repository.save(entity);
+        return mapper.map(savedItem, ItemDTO.class);
+    }
+    private void setDefaultItem(Item item) {
+        item.setStatus(StatusModel.ACTIVE.name());
     }
 }
