@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class CsvParser<T> {
@@ -16,7 +15,7 @@ public abstract class CsvParser<T> {
         try (Reader reader = Files.newBufferedReader(Path.of(path))) {
             return new CsvToBeanBuilder<T>(reader)
                     .withType(clazz)
-                    .withFilter(CsvValidator::isLineEmpty)
+                    .withFilter(CsvValidator::isLineNotEmpty)
                     .build()
                     .parse();
         }
