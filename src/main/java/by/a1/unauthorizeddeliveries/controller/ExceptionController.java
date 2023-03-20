@@ -23,10 +23,11 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class ExceptionController {
     /**
-     * Handles CustomException and returns a service exception response with the corresponding HTTP status code.
+     * Handles ServiceException and returns a service exception response with the corresponding HTTP status code.
      * @param exception the exception to be handled
      * @return the custom exception response
      */
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<String> handleServiceException(ServiceException exception) {
         return ResponseEntity

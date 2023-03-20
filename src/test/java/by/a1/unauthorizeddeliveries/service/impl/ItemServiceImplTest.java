@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
@@ -109,6 +110,18 @@ class ItemServiceImplTest {
 
         Assertions.assertThat(result)
                 .isEqualTo(itemDTOS.get(0));
+    }
+
+    @Test
+    void findItemsShouldReturnItemList() {
+        when(itemRepositoryMock.findAll(any(Example.class)))
+                .thenReturn(items);
+
+        List<ItemDTO> result = itemService.findItems(itemDTOS.get(0));
+
+        Assertions.assertThat(result)
+                .isNotEmpty()
+                .hasSize(itemDTOS.size());
     }
 
     @Test
