@@ -6,6 +6,7 @@ import by.a1.unauthorizeddeliveries.model.StatusModel;
 import by.a1.unauthorizeddeliveries.model.UserDTO;
 import by.a1.unauthorizeddeliveries.repository.UserRepository;
 import by.a1.unauthorizeddeliveries.service.UserService;
+import by.a1.unauthorizeddeliveries.util.ExampleUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findUsers(UserDTO user) {
-        return repository.findAll(Example.of(mapper.map(user, User.class)))
+        return repository.findAll(Example.of(mapper.map(user, User.class), ExampleUtil.ENTITY_SEARCH_MATCHER))
                 .stream()
                 .map(u -> mapper.map(u, UserDTO.class))
                 .toList();

@@ -8,6 +8,7 @@ import by.a1.unauthorizeddeliveries.repository.PostingRepository;
 import by.a1.unauthorizeddeliveries.service.DocumentHeaderService;
 import by.a1.unauthorizeddeliveries.service.MaterialService;
 import by.a1.unauthorizeddeliveries.service.PostingService;
+import by.a1.unauthorizeddeliveries.util.ExampleUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
@@ -51,7 +52,7 @@ public class PostingServiceImpl implements PostingService {
     @Override
     @Transactional
     public List<PostingResponseDTO> findPostings(PostingRequestDTO posting) {
-        return repository.findAll(Example.of(mapper.map(posting, Posting.class)))
+        return repository.findAll(Example.of(mapper.map(posting, Posting.class), ExampleUtil.ENTITY_SEARCH_MATCHER))
                 .stream()
                 .map(this::mapWithMaterials)
                 .toList();

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -20,7 +19,7 @@ public class CsvPostingParser extends CsvParser<CsvPostingModel> {
         try (Reader reader = Files.newBufferedReader(Path.of(path))) {
             return new CsvToBeanBuilder<CsvPostingModel>(reader)
                     .withType(CsvPostingModel.class)
-                    .withFilter(CsvValidator::isLineEmpty)
+                    .withFilter(CsvValidator::isLineNotEmpty)
                     .withSeparator(';')
                     .build()
                     .parse();
