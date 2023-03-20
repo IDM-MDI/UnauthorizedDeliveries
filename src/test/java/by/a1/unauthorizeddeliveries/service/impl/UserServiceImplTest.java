@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
     private static final int PAGE = 0;
-
     private static final int SIZE = 5;
     private static final String FILTER = "username";
     private static final String DIRECTION = "asc";
